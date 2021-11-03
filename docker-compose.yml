@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  postgres:
+    image: postgres:12
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c log_statement=all -c log_min_messages=INFO -c log_min_duration_statement=0
+    env_file: .db.env
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    ports:
+      - 35432:5432
+    restart: always
+
+  django:
+    build: .
+    command: sh -c "python manage.py migrate
+             && python manage.py runserver"
+    env_file: .django.env
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    restart: always
+
+volumes:
+  postgres-volume:
