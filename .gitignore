@@ -1,3 +1,5 @@
 venv
 .idea
 Blog/app/db.sqlite3
+.db.env
+.django.env
