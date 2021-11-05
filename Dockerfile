@@ -2,7 +2,7 @@ FROM python:3.8.12-slim
 
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app
+WORKDIR /account
 
 COPY requirements.txt .
 
