@@ -8,7 +8,7 @@ services:
     volumes:
       - postgres-volume:/var/lib/postgresql/data
     ports:
-      - 35432:5432
+      - 5432:5432
     restart: always
 
   django:
@@ -20,6 +20,22 @@ services:
       - .:/app
     ports:
       - 8000:8000
+    restart: always
+
+  redis:
+    image: redis:latest
+
+  rabbitmq:
+    image: rabbitmq:latest
+
+  celery:
+    build: .
+    command: celery -A blog worker -l INFO
+    env_file: .celery.env
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
     restart: always
 
 volumes:

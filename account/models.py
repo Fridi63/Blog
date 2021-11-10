@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from .mixin import CreatedModifiedMixin
+from blog.mixins import CreatedModifiedMixin
 
 
 class User(AbstractUser, CreatedModifiedMixin):
     def __str__(self):
-        return self.firstname
+        return self.username
 
 
 class Profile(CreatedModifiedMixin):

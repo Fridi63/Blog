@@ -1,5 +1,5 @@
 from django.db import models
-from account.mixin import CreatedModifiedMixin
+from blog.mixins import CreatedModifiedMixin
 from account.models import User
 
 

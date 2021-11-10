@@ -3,4 +3,4 @@ venv
 Blog/app/db.sqlite3
 .db.env
 .django.env
-db.sqlite3
+.celery.env
