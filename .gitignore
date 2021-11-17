@@ -4,3 +4,5 @@ example.db.env
 example.django.env
 .celery.env
 Blog/account/__pycache__
+Blog/blog/__pycache__
+Blog/post/__pycache__
