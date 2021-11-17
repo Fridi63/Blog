@@ -2,20 +2,21 @@ from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from blog.serializers import UserCreateSerialiser
+from account.serializers import UserCreateSerialiser
 from .models import User
 from blog.tasks import send_email
+from rest_framework import status
 
 
-class CheckUserView(APIView):
+class UserMeView(APIView):
 
     permissions_classes = (IsAuthenticated,)
 
-    def get(self, request):
-        content = {
-            "user": str(request.user)
-        }
-        return Response(content)
+    def get(self, request, pk):
+
+        user = User.objects.get(pk=pk)
+        serializer = UserCreateSerialiser(user)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 class CreateUserView(APIView):
@@ -29,5 +30,5 @@ class CreateUserView(APIView):
         u.set_password(password)
         u.save()
 
-        send_email("Registration", "You have successfully registered", 'jeyoo578@gmail.com', email)
-        return Response(data="User registered")
+        send_email.delay("Registration", "You have successfully registered", 'jeyoo578@gmail.com', ['email'])
+        return Response(status=status.HTTP_201_CREATED, data={"message":"Thank you for registering. Please verify your email before continuing"})

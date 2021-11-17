@@ -1,6 +1,6 @@
 venv
 .idea
-Blog/app/db.sqlite3
-.db.env
-.django.env
+example.db.env
+example.django.env
 .celery.env
+Blog/account/__pycache__

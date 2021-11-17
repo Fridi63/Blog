@@ -1,9 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from blog.mixins import CreatedModifiedMixin
 
 
 class User(AbstractUser, CreatedModifiedMixin):
+
+    # objects = models.Manager()
+    email_verified = models.BooleanField(default=False)
+
     def __str__(self):
         return self.username
 

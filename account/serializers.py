@@ -24,7 +24,7 @@ class PostSerializer(serializers.Serializer):
 
     class Meta:
         model = Post
-        fields = ["author", "title", "content", "categories"] # ?
+        fields = ["author", "title", "content", "categories"]
 
 
 class CommentSerializer(serializers.Serializer):
@@ -32,11 +32,12 @@ class CommentSerializer(serializers.Serializer):
 
     class Meta:
         model = Comment
-        fields = ["user", "content"] # ?
+        fields = ["user", "content"]
 
 
-class UserCreateSerialiser(serializers.Serializer):
+class UserCreateSerialiser(serializers.ModelSerializer):
 
-    username = serializers.CharField(max_length=30)
-    password = serializers.CharField(max_length=50)
-    email = serializers.EmailField(max_length=50)
+
+    class Meta:
+        model = User
+        fields = ["username", "password", "email"]
