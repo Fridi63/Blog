@@ -4,52 +4,51 @@ services:
   postgres:
     image: postgres:12
     command: postgres -c shared_preload_libraries=pg_stat_statements -c log_statement=all -c log_min_messages=INFO -c log_min_duration_statement=0
-    env_file: example.db.env
+    env_file: .db.env
     volumes:
       - postgres-volume:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 35432:5432
     restart: always
 
   django:
     build: .
     command: sh -c "python manage.py migrate
              && python manage.py runserver 0.0.0.0:8000"
-    env_file: example.django.env
+    env_file: .django.env
     volumes:
       - .:/app
     ports:
       - 8000:8000
     restart: always
-    networks:
-      - redis-rabbit-network
 
   redis:
     image: redis:latest
-    networks:
-      - redis-rabbit-network
+#    networks: celery-network
+
 #    ports:
 #      - '6379:6379'
 
   rabbitmq:
     image: rabbitmq:latest
-    networks:
-      - redis-rabbit-network
+#    networks: celery-network
+
 #    ports:
 #      - '5672:5672'
 
   celery:
     build: .
     command: celery -A blog worker -l INFO
-    env_file: example.django.env
+    env_file: .django.env
     depends_on:
       - postgres
       - redis
       - rabbitmq
+#    networks: celery-network
     restart: always
 
 volumes:
   postgres-volume:
 
-networks:
-  - redis-rabbit-network:
+#networks:
+#  - celery-network:

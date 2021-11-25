@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'post',
     'rest_framework_simplejwt',
     'rest_framework',
-    'rest_framework_swagger',
+    'drf_yasg',
 
 ]
 

@@ -3,6 +3,25 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from blog.mixins import CreatedModifiedMixin
 
 
+# class AppUserManager(models.Manager):
+#
+#     def create_user(self, username, email, password):
+#         if not username:
+#             raise ValueError('Invalid name')
+#
+#         if not email:
+#             raise ValueError('Invalid email')
+#
+#         if not password:
+#             raise ValueError('Invalid password')
+#
+#         user = self.model(username=username, email=self.normalize_email(email))
+#         user.set_password(password)
+#         user.save()
+#
+#         return user
+
+
 class User(AbstractUser, CreatedModifiedMixin):
 
     # objects = models.Manager()
